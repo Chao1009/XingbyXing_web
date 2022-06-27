@@ -11,6 +11,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
+from django.db.models import Count
 
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
 from .models import Item, OrderItem, UserItem, Order, Address, Payment, Coupon, Refund, UserProfile
@@ -355,8 +356,10 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             items = UserItem.objects.filter(user=self.request.user)
+            queryset = UserItem.objects.filter(user=self.request.user).values('sku', 'size').annotate(count=Count('id'))
             context = {
-                'object': items
+                'object': items,
+                'summary': queryset,
             }
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:

@@ -10,22 +10,18 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Item title</th>
             <th scope="col">sku</th>
-            <th scope="col">storage</th>
-            <th scope="col">location</th>
-            <th scope="col">date</th>
+            <th scope="col">size</th>
+            <th scope="col">count</th>
         </tr>
         </thead>
         <tbody>
-        {% for order_item in object %}
+        {% for order_summary in summary %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ order_item.title }}</td>
-            <td>{{ order_item.sku }}</td>
-            <td>{{ order_item.storage_id }}</td>
-            <td>{{ order_item.storage_pos }}</td>
-            <td>{{ order_item.storage_time }}</td>
+            <td>{{ order_summary.sku }}</td>
+            <td>{{ order_summary.size }}</td>
+            <td>{{ order_summary.count }}</td>
         </tr>
         {% empty %}
         <tr>
